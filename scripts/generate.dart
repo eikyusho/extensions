@@ -96,7 +96,6 @@ void generateExtensions(String path) {
 
   final (exists, version) = verifyExistence(path, source);
 
-
   if (!exists && version == null) {
     return createSourceFile(binDir, xmlFile, iconFile);
   }
@@ -137,6 +136,8 @@ void createSourceFile(Directory bin, File source, File iconFile) {
   final eksFile = '${bin.path}/$uuid/${Constants.eksFile}';
 
   compiler.encode(source.path, iconFile.path, eksFile);
+
+  iconFile.copy('${bin.path}/$uuid/icon-preview${Constants.imgExtension}');
 
   addJsonMap(
     source.parent.path,

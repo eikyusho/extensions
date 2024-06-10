@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<eks-source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schema.xsd">
+    <metadata>
+        <name>ReadNovelFull</name>
+        <base-url>https://readnovelfull.com</base-url>
+        <version>1.0.0</version>
+        <language>en</language>
+    </metadata>
+
+    <discover>
+        <novel-list id="trending" url="/">
+            <novel-item selector="#index-novel-hot > div.index-novel > div.item">
+                <title>.title h3</title>
+                <cover attribute="src">img</cover>
+                <link attribute="href">a</link>
+            </novel-item>
+        </novel-list>
+        <novel-list id="most-popular" url="/novel-list/most-popular-novel">
+            <novel-item selector="#list-page > .col-novel-main.archive .row">
+                <title>.novel-title</title>
+                <cover attribute="src">.cover</cover>
+                <link attribute="href">a</link>
+            </novel-item>
+        </novel-list>
+        <novel-list id="recently-updated" url="/novel-list/latest-release-novel">
+            <novel-item selector="#list-page > .col-novel-main.archive .row">
+                <title>.novel-title</title>
+                <cover attribute="src">.cover</cover>
+                <link attribute="href">a</link>
+            </novel-item>
+        </novel-list>
+    </discover>
+</eks-source>
