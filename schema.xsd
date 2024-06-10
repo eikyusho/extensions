@@ -1,0 +1,85 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <!-- * TYPES   -->
+    <xs:simpleType name="novel-listIdType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="trending"/>
+            <xs:enumeration value="most-popular"/>
+            <xs:enumeration value="recently-updated"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="novel-item-attrType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="attribute" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <!-- * ELEMENTS  -->
+    <xs:element name="novel-list">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="novel-item"/>
+            </xs:sequence>
+            <xs:attribute type="novel-listIdType" name="id" use="required"/>
+            <xs:attribute type="xs:string" name="url" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="novel-item">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="title" type="novel-item-attrType"/>
+                <xs:element name="cover" type="novel-item-attrType"/>
+                <xs:element name="link" type="novel-item-attrType"/>
+            </xs:sequence>
+            <xs:attribute type="xs:string" name="selector" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+
+    <!-- * ROOT ELEMENT -->
+    <xs:element name="eks-source">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="metadata"/>
+                <xs:element ref="discover"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- * METADATA ELEMENT -->
+    <xs:element name="metadata">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="base-url" type="xs:string"/>
+                <xs:element name="version" type="xs:string"/>
+                <xs:element name="language" type="lang"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- * DISCOVER ELEMENT -->
+    <xs:element name="discover">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="novel-list" maxOccurs="unbounded" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+        <xs:unique name="UniqueNovelListId">
+            <xs:selector xpath="novel-list"/>
+            <xs:field xpath="@id"/>
+        </xs:unique>
+    </xs:element>
+
+
+    <!-- * LANG REFERENCE -->
+    <xs:simpleType name="lang">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="en"/>
+            <xs:enumeration value="pt"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>
+

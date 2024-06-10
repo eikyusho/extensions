@@ -1,4 +1,5 @@
 name: eikyusho_extensions
+description: 'Source extensions for Eikyusho'
 publish_to: 'none'
 
 environment:
