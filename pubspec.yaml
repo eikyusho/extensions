@@ -10,8 +10,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  image: ^4.2.0
+  image: ^4.2.0 # ? Image processing
   path: ^1.9.0  # ? File system
+  xml: ^6.5.0 # ? XML parsing
 
   # * Dev Utility
   meta: ^1.12.0 # ? Class annotations

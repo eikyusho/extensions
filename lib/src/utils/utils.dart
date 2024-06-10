@@ -1,3 +1,5 @@
+// ignore_for_file: public_member_api_docs
+
 import 'dart:typed_data';
 
 import 'package:meta/meta.dart';
@@ -23,4 +25,8 @@ int findHeaderIndex(List<int> mainList, List<int> header, [int start = 0]) {
     }
   }
   return -1;
+}
+
+String removeDoubleSlash(String url) {
+  return url.replaceAll(RegExp('(?<!:)/{2,}'), '/');
 }

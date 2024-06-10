@@ -3,6 +3,6 @@ include: package:very_good_analysis/analysis_options.yaml
 linter:
   rules:
     sort_pub_dependencies: false
-    public_member_api_docs: false
+    public_member_api_docs: true
     prefer_relative_imports: true
     always_use_package_imports: false
