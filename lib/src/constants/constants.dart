@@ -13,13 +13,17 @@ final class Constants {
   @internal
   static const headerOffset = 4;
 
+  @internal
+  static const imgExtension = '.png';
+
   /// Eikyusho binary extension.
   static const eksFile = 'source.eks';
+
   /// Eikyusho XML extension.
   static const xmlFile = 'source.xml';
 
-  @internal
-  static const imgExtension = '.png';
+  /// Eikyusho image extension.
+  static const imgFile = 'icon$imgExtension';
 
   static const img1xFile = 'icon@1x$imgExtension';
   static const img2xFile = 'icon@2x$imgExtension';

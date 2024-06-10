@@ -21,6 +21,9 @@ class EikyushoParser {
 
   XmlElement get _metadata => _root.getElement('metadata')!;
 
+  /// Gets the name.
+  String get name => _metadata.getElement('name')?.innerText ?? '';
+
   /// Gets the base URL.
   String get baseUrl => _metadata.getElement('base-url')?.innerText ?? '';
 
@@ -39,8 +42,6 @@ class EikyushoParser {
 
   NovelListFinder _getNovelList(XmlNode novelList) {
     final url = novelList.getAttribute('url');
-
-    logPrint('URL: $url');
 
     final novelItem = novelList.findElements('novel-item').first;
 
@@ -69,7 +70,7 @@ class EikyushoParser {
 
   /// Validates the XML document.
   void printEverything() {
-    logPrint('Root element: $_xmlName');
+    AppLogger.debug('Root element: $_xmlName');
     // logPrint('Discover element: ${_discover.innerText}');
 
     final trending = getNovelList(DiscoverListType.trending);
