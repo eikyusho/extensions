@@ -2,10 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:eikyusho_extensions/extensions.dart';
-import 'package:eikyusho_extensions/src/constants/constants.dart';
 import 'package:eikyusho_extensions/src/utils/logger.dart';
 import 'package:uuid/uuid.dart';
-import 'package:xml/xml.dart';
 
 class JsonMap {
   JsonMap(this.file) {
@@ -92,7 +90,7 @@ void generateExtensions(String path) {
     return;
   }
 
-  final source = EikyushoParser(XmlDocument.parse(xmlFile.readAsStringSync()));
+  final source = EikyushoParser(xmlFile.readAsStringSync());
 
   final (exists, version) = verifyExistence(path, source);
 
@@ -141,7 +139,7 @@ void createSourceFile(Directory bin, File source, File iconFile) {
 
   addJsonMap(
     source.parent.path,
-    EikyushoParser(XmlDocument.parse(source.readAsStringSync())),
+    EikyushoParser(source.readAsStringSync()),
     uuid,
   );
 }
@@ -155,7 +153,7 @@ void updateSourceFile(Directory bin, File source, File iconFile) {
 
   updateJsonMap(
     source.parent.path,
-    EikyushoParser(XmlDocument.parse(source.readAsStringSync())),
+    EikyushoParser(source.readAsStringSync()),
     uuid,
   );
 }

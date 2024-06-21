@@ -24,6 +24,7 @@ final class Constants {
 
   /// Eikyusho image extension.
   static const imgFile = 'icon$imgExtension';
+  static const imgPreviewFile = 'icon-preview$imgExtension';
 
   static const img1xFile = 'icon@1x$imgExtension';
   static const img2xFile = 'icon@2x$imgExtension';

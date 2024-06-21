@@ -9,9 +9,12 @@ import 'utils/logger.dart';
 /// Extracts data from an XML source.
 class EikyushoParser {
   /// Creates a new instance of [EikyushoParser].
-  const EikyushoParser(this._document);
+  const EikyushoParser(this.document);
 
-  final XmlDocument _document;
+  /// The XML document.
+  final String document;
+
+  XmlDocument get _document => XmlDocument.parse(document);
 
   XmlElement get _root => _document.rootElement;
 
