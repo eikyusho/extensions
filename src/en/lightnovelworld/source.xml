@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<eks-source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="../extensions/schema.xsd">
+    <metadata>
+        <name>Light Novel World</name>
+        <base-url>https://www.lightnovelworld.co</base-url>
+        <version>1.0.0</version>
+        <language>en</language>
+    </metadata>
+
+    <discover>
+        <novel-list id="trending" url="/home">
+            <novel-item selector="#index > section:nth-child(4) .section-body > ul > li">
+                <title>.novel-title</title>
+                <cover attribute="data-src">a > figure > img</cover>
+                <link attribute="href">a</link>
+            </novel-item>
+        </novel-list>
+        <novel-list id="most-popular" url="/ranking-04061612">
+            <novel-item selector="#ranking > div.container > div > ul > li">
+                <title>.title</title>
+                <cover attribute="data-src">img</cover>
+                <link attribute="href">a</link>
+            </novel-item>
+        </novel-list>
+        <novel-list id="recently-updated" url="/latest-updates-04061612">
+            <novel-item selector="#latest-updates > div > ul > .novel-item">
+                <title>.novel-title</title>
+                <cover attribute="data-src">img</cover>
+                <link attribute="href">a</link>
+            </novel-item>
+        </novel-list>
+    </discover>
+</eks-source>
