@@ -3,7 +3,8 @@ import 'package:xml/xpath.dart';
 
 import 'enums/enums.dart';
 import 'parser/element.dart';
-import 'parser/novel_list_finder.dart';
+import 'parser/finders/novel_finder.dart';
+import 'parser/finders/novel_list_finder.dart';
 import 'utils/logger.dart';
 
 /// Extracts data from an XML source.
@@ -20,9 +21,11 @@ class EikyushoParser {
 
   XmlName get _xmlName => _document.rootElement.name;
 
+  XmlElement get _metadata => _root.getElement('metadata')!;
+
   XmlElement get _discover => _root.getElement('discover')!;
 
-  XmlElement get _metadata => _root.getElement('metadata')!;
+  XmlElement get _novel => _root.getElement('novel')!;
 
   /// Gets the name.
   String get name => _metadata.getElement('name')?.innerText ?? '';
@@ -36,11 +39,45 @@ class EikyushoParser {
   /// Gets the language.
   String get language => _metadata.getElement('language')?.innerText ?? '';
 
+  /// Gets the status map.
+  Map<String, String> statusMap() {
+    final statusMapElement = _metadata.getElement('novel-status-map')!;
+    final statusMap = <String, String>{};
+
+    for (final status in statusMapElement.findElements('*')) {
+      statusMap[status.name.toString().toLowerCase()] = status.innerText;
+    }
+
+    return statusMap;
+  }
+
   /// Gets the novel list.
   NovelListFinder getNovelList(DiscoverListType type) {
     final list = _discover.xpath('//novel-list[@id="${type.value}"]').first;
 
     return _getNovelList(list);
+  }
+
+  /// Gets the novel.
+  NovelFinder getNovelDetails(String url) {
+    final novel = _novel;
+
+    final titleSelector = _getElement(novel.getElement('title'));
+    final coverSelector = _getElement(novel.getElement('cover'));
+    final authorSelector = _getElement(novel.getElement('author'));
+    final chapterCountSelector = _getElement(novel.getElement('chapter-count'));
+    final viewsSelector = _getElement(novel.getElement('views'));
+    final statusSelector = _getElement(novel.getElement('status'));
+
+    return NovelFinder(
+      url: url,
+      title: titleSelector,
+      cover: coverSelector,
+      author: authorSelector,
+      status: statusSelector,
+      views: viewsSelector,
+      chapterCount: chapterCountSelector,
+    );
   }
 
   NovelListFinder _getNovelList(XmlNode novelList) {

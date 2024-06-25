@@ -1,6 +1,6 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
     <!-- * TYPES   -->
-    <xs:simpleType name="novel-listIdType">
+    <xs:simpleType name="novel-list-idType">
         <xs:restriction base="xs:string">
             <xs:enumeration value="trending"/>
             <xs:enumeration value="most-popular"/>
@@ -16,13 +16,21 @@
         </xs:simpleContent>
     </xs:complexType>
 
+    <xs:simpleType name="novelType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="text"/>
+            <xs:enumeration value="selector"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+
     <!-- * ELEMENTS  -->
     <xs:element name="novel-list">
         <xs:complexType>
             <xs:sequence>
                 <xs:element ref="novel-item"/>
             </xs:sequence>
-            <xs:attribute type="novel-listIdType" name="id" use="required"/>
+            <xs:attribute type="novel-list-idType" name="id" use="required"/>
             <xs:attribute type="xs:string" name="url" use="required"/>
         </xs:complexType>
     </xs:element>
@@ -38,6 +46,27 @@
         </xs:complexType>
     </xs:element>
 
+    <xs:element name="novel-meta">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="author" type="xs:string"/>
+                <xs:element name="status" type="xs:string"/>
+                <xs:element name="genre" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:element name="novel-status-map">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="ongoing" type="xs:string"/>
+                <xs:element name="completed" type="xs:string"/>
+                <xs:element name="hiatus" type="xs:string" minOccurs="0"/>
+                <xs:element name="dropped" type="xs:string" minOccurs="0"/>
+                <xs:element name="cancelled" type="xs:string" minOccurs="0"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
     <!-- * ROOT ELEMENT -->
     <xs:element name="eks-source">
@@ -45,6 +74,7 @@
             <xs:sequence>
                 <xs:element ref="metadata"/>
                 <xs:element ref="discover"/>
+                <xs:element ref="novel"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -57,6 +87,7 @@
                 <xs:element name="base-url" type="xs:string"/>
                 <xs:element name="version" type="xs:string"/>
                 <xs:element name="language" type="lang"/>
+                <xs:element ref="novel-status-map"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -72,6 +103,21 @@
             <xs:selector xpath="novel-list"/>
             <xs:field xpath="@id"/>
         </xs:unique>
+    </xs:element>
+
+    <!-- * NOVEL ELEMENT -->
+    <xs:element name="novel">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="title" type="novel-item-attrType"/>
+                <xs:element name="cover" type="novel-item-attrType"/>
+                <xs:element name="author" type="novel-item-attrType"/>
+                <xs:element name="chapter-count" type="novel-item-attrType"/>
+                <xs:element name="views" type="novel-item-attrType"/>
+                <xs:element name="status" type="novel-item-attrType"/>
+            </xs:sequence>
+            <xs:attribute type="novelType" name="type" use="required"/>
+        </xs:complexType>
     </xs:element>
 
 

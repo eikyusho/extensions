@@ -1,4 +1,4 @@
-import 'element.dart';
+import '../element.dart';
 
 /// Novel List Finder
 class NovelListFinder {
