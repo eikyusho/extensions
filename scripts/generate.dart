@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:eikyusho_extensions/extensions.dart';
+import 'package:eikyusho_extensions/src/core/languages.dart';
 import 'package:eikyusho_extensions/src/utils/logger.dart';
 import 'package:uuid/uuid.dart';
 
@@ -91,6 +92,8 @@ void generateExtensions(String path) {
   }
 
   final source = EikyushoParser(xmlFile.readAsStringSync());
+
+  Language.validate(source.language);
 
   final (exists, version) = verifyExistence(path, source);
 

@@ -29,6 +29,6 @@ class NovelListFinder {
   /// Converts the [NovelListFinder] to a string.
   @override
   String toString() {
-    return 'url: $url, novel: $novel, title: $title, cover: $cover, link: $link';
+    return 'url: $url, novel: $novel, title: $title, link: $link';
   }
 }

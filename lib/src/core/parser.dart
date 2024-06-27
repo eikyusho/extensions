@@ -1,11 +1,11 @@
 import 'package:xml/xml.dart';
 import 'package:xml/xpath.dart';
 
-import 'enums/enums.dart';
-import 'parser/element.dart';
-import 'parser/finders/novel_finder.dart';
-import 'parser/finders/novel_list_finder.dart';
-import 'utils/logger.dart';
+import '../enums/enums.dart';
+import '../parser/element.dart';
+import '../parser/finders/novel_finder.dart';
+import '../parser/finders/novel_list_finder.dart';
+import '../utils/logger.dart';
 
 /// Extracts data from an XML source.
 class EikyushoParser {

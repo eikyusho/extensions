@@ -6,9 +6,9 @@ import 'package:image/image.dart';
 import 'package:meta/meta.dart';
 import 'package:path/path.dart' as path;
 
-import 'constants/constants.dart';
-import 'enums/enums.dart';
-import 'utils/utils.dart';
+import '../constants/constants.dart';
+import '../enums/enums.dart';
+import '../utils/utils.dart';
 
 /// A class that compiles an Eikyusho file.
 final class EikyushoCompiler {

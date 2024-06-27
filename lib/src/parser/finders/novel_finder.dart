@@ -37,6 +37,6 @@ class NovelFinder {
   /// Converts the [NovelFinder] to a string.
   @override
   String toString() {
-    return 'url: $url, title: $title, cover: $cover, chapterCount: $chapterCount';
+    return 'url: $url, title: $title,  chapterCount: $chapterCount';
   }
 }
