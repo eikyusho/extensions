@@ -36,6 +36,9 @@ class EikyushoParser {
   /// Gets the version.
   String get version => _metadata.getElement('version')?.innerText ?? '';
 
+  /// Verifies if the extension is obsolete.
+  bool get isObsolete => _metadata.getElement('version')?.innerText == 'null';
+
   /// Gets the language.
   String get language => _metadata.getElement('language')?.innerText ?? '';
 
@@ -68,6 +71,8 @@ class EikyushoParser {
     final chapterCountSelector = _getElement(novel.getElement('chapter-count'));
     final viewsSelector = _getElement(novel.getElement('views'));
     final statusSelector = _getElement(novel.getElement('status'));
+    final descriptionSelector = _getElement(novel.getElement('description'));
+    final genresSelector = _getElement(novel.getElement('genres'));
 
     return NovelFinder(
       url: url,
@@ -77,6 +82,8 @@ class EikyushoParser {
       status: statusSelector,
       views: viewsSelector,
       chapterCount: chapterCountSelector,
+      description: descriptionSelector,
+      genres: genresSelector,
     );
   }
 

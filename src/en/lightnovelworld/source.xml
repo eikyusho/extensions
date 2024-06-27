@@ -41,5 +41,7 @@
         <chapter-count>#novel .header-body .novel-info div.header-stats > span:nth-child(1) strong</chapter-count>
         <views>#novel .header-body .novel-info div.header-stats > span:nth-child(2) strong</views>
         <status>#novel .header-body .novel-info div.header-stats > span:nth-child(4) strong</status>
+        <genres>#novel > header > div.header-body.container > div.novel-info > div.categories > ul > li</genres>
+        <description>#info > div.summary > div p</description>
     </novel>
 </eks-source>

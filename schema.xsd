@@ -115,6 +115,8 @@
                 <xs:element name="chapter-count" type="novel-item-attrType"/>
                 <xs:element name="views" type="novel-item-attrType"/>
                 <xs:element name="status" type="novel-item-attrType"/>
+                <xs:element name="genres" type="novel-item-attrType"/>
+                <xs:element name="description" type="novel-item-attrType"/>
             </xs:sequence>
             <xs:attribute type="novelType" name="type" use="required"/>
         </xs:complexType>

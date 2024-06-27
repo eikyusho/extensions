@@ -11,6 +11,8 @@ class NovelFinder {
     required this.chapterCount,
     required this.views,
     required this.status,
+    required this.description,
+    required this.genres,
   });
 
   /// The URL of the novel list page.
@@ -33,6 +35,12 @@ class NovelFinder {
 
   /// Novel status selector.
   final Element status;
+
+  /// Novel description selector.
+  final Element description;
+
+  /// Novel genres selector.
+  final Element genres;
 
   /// Converts the [NovelFinder] to a string.
   @override
