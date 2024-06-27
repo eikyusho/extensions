@@ -3,7 +3,7 @@
     <metadata>
         <name>Light Novel World</name>
         <base-url>https://www.lightnovelworld.co</base-url>
-        <version>1.0.1</version>
+        <version>1.0.2</version>
         <language>en</language>
         <novel-status-map>
             <ongoing>ongoing</ongoing>
