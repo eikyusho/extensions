@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<eks-source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="../extensions/schema.xsd">
+<eks-source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="../../../schema.xsd">
     <metadata>
         <name>Light Novel World</name>
         <base-url>https://www.lightnovelworld.co</base-url>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
         <language>en</language>
+        <novel-status-map>
+            <ongoing>ongoing</ongoing>
+            <completed>completed</completed>
+        </novel-status-map>
     </metadata>
 
     <discover>
@@ -30,4 +34,12 @@
             </novel-item>
         </novel-list>
     </discover>
+    <novel type="selector">
+        <title>#novel .header-body .novel-info > div.main-head > h1</title>
+        <cover attribute="data-src">#novel .header-body figure > img</cover>
+        <author>#novel .header-body .novel-info .author > a > span</author>
+        <chapter-count>#novel .header-body .novel-info div.header-stats > span:nth-child(1) strong</chapter-count>
+        <views>#novel .header-body .novel-info div.header-stats > span:nth-child(2) strong</views>
+        <status>#novel .header-body .novel-info div.header-stats > span:nth-child(4) strong</status>
+    </novel>
 </eks-source>
