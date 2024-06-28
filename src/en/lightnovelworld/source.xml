@@ -3,11 +3,11 @@
     <metadata>
         <name>Light Novel World</name>
         <base-url>https://www.lightnovelworld.co</base-url>
-        <version>1.0.3</version>
+        <version>1.0.4</version>
         <language>en</language>
         <novel-status-map>
-            <ongoing>ongoing</ongoing>
-            <completed>completed</completed>
+            <ongoing>onGoing</ongoing>
+            <completed>Completed</completed>
         </novel-status-map>
     </metadata>
 
@@ -62,4 +62,14 @@
 
         getDetails();
     </novel>
+    <novel-chapters-list url="/chapters" next-button="#chpagedlist > div > div > div > ul > li.PagedList-skipToNext a">
+        Array.from(document.querySelectorAll('#chpagedlist > ul > li'), chapter => {
+        return {
+        number: chapter.querySelector('.chapter-no').innerText,
+        title: chapter.querySelector('.chapter-title').innerText,
+        link: chapter.querySelector('a').href,
+        date: chapter.querySelector('.chapter-update').getAttribute('datetime').split(' ')[0]
+        };
+        });
+    </novel-chapters-list>
 </eks-source>
