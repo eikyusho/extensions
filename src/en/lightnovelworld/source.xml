@@ -3,7 +3,7 @@
     <metadata>
         <name>Light Novel World</name>
         <base-url>https://www.lightnovelworld.co</base-url>
-        <version>1.0.4</version>
+        <version>1.0.5</version>
         <language>en</language>
         <novel-status-map>
             <ongoing>onGoing</ongoing>
@@ -72,4 +72,7 @@
         };
         });
     </novel-chapters-list>
+    <novel-chapter>
+        document.querySelector('#chapter-container').innerText;
+    </novel-chapter>
 </eks-source>
