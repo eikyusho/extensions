@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<eks-source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  xsi:noNamespaceSchemaLocation="../../../schema.xsd">
+<eks-source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schema.xsd">
     <metadata>
         <name>Light Novel World</name>
         <base-url>https://www.lightnovelworld.co</base-url>
@@ -13,35 +13,53 @@
 
     <discover>
         <novel-list id="trending" url="/home">
-            <novel-item selector="#index > section:nth-child(4) .section-body > ul > li">
-                <title>.novel-title</title>
-                <cover attribute="data-src">a > figure > img</cover>
-                <link attribute="href">a</link>
-            </novel-item>
+            Array.from(document.querySelectorAll('#index > section:nth-child(4) > div.section-body > ul > li'), item =>
+            {
+            return {
+            title: item.querySelector('.novel-title').innerText,
+            cover: item.querySelector('a img').getAttribute('data-src'),
+            link: item.querySelector('a').href
+            };
+            });
         </novel-list>
         <novel-list id="most-popular" url="/ranking-04061612">
-            <novel-item selector="#ranking > div.container > div > ul > li">
-                <title>.title</title>
-                <cover attribute="data-src">img</cover>
-                <link attribute="href">a</link>
-            </novel-item>
+            Array.from(document.querySelectorAll('#ranking > div.container > div > ul > li'), item =>
+            {
+            return {
+            title: item.querySelector('.title').innerText,
+            cover: item.querySelector('img').getAttribute('data-src'),
+            link: item.querySelector('a').href
+            };
+            });
         </novel-list>
         <novel-list id="recently-updated" url="/latest-updates-04061612">
-            <novel-item selector="#latest-updates > div > ul > .novel-item">
-                <title>.novel-title</title>
-                <cover attribute="data-src">img</cover>
-                <link attribute="href">a</link>
-            </novel-item>
+            Array.from(document.querySelectorAll('#latest-updates > div > ul > .novel-item'), item =>
+            {
+            return {
+            title: item.querySelector('.novel-title').innerText,
+            cover: item.querySelector('img').getAttribute('data-src'),
+            link: item.querySelector('a').href
+            };
+            });
         </novel-list>
     </discover>
-    <novel type="selector">
-        <title>#novel .header-body .novel-info > div.main-head > h1</title>
-        <cover attribute="data-src">#novel .header-body figure > img</cover>
-        <author>#novel .header-body .novel-info .author > a > span</author>
-        <chapter-count>#novel .header-body .novel-info div.header-stats > span:nth-child(1) strong</chapter-count>
-        <views>#novel .header-body .novel-info div.header-stats > span:nth-child(2) strong</views>
-        <status>#novel .header-body .novel-info div.header-stats > span:nth-child(4) strong</status>
-        <genres>#novel > header > div.header-body.container > div.novel-info > div.categories > ul > li</genres>
-        <description>#info > div.summary > div p</description>
+    <novel>
+        function getDetails() {
+        const novelHeader = document.querySelector('#novel .header-body');
+
+        return {
+        title: novelHeader.querySelector('.novel-info > div.main-head > h1').innerText,
+        cover: novelHeader.querySelector('figure > img').getAttribute('data-src'),
+        author: novelHeader.querySelector('.novel-info .author > a > span').innerText,
+        chapters: novelHeader.querySelector('.novel-info div.header-stats > span:nth-child(1) strong').innerText,
+        views: novelHeader.querySelector('.novel-info div.header-stats > span:nth-child(2) strong').innerText,
+        status: novelHeader.querySelector('.novel-info div.header-stats > span:nth-child(4) strong').innerText,
+        genres: Array.from(document.querySelectorAll('.novel-info > div.categories > ul > li')).map(genre =>
+        genre.innerText),
+        description: document.querySelector('#info > div.summary > div p').innerText,
+        };
+        }
+
+        getDetails();
     </novel>
 </eks-source>
