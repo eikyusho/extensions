@@ -63,9 +63,21 @@ class EikyushoParser {
   ElementFinder getNovelDetails(String url) {
     final novel = _root.getElement('novel')!;
 
+
     return ElementFinder(
       url: url,
       script: _getScript(novel),
+    );
+  }
+
+  /// Gets the novel chapters.
+  ElementFinder getNovelChapters(String url) {
+    final novel = _root.getElement('novel-chapters-list')!;
+
+    return ElementFinder(
+      url: '$url/${novel.getAttribute('url')}',
+      script: _getScript(novel),
+      nextButtonSelector: novel.getAttribute('next-button'),
     );
   }
 

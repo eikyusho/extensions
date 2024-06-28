@@ -19,6 +19,17 @@
     </xs:complexType>
 
 
+    <!-- * ELEMENTS  -->
+    <xs:complexType name="novel-chapters-listType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="url" type="xs:string"/>
+                <xs:attribute name="next-button" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+
     <xs:element name="novel-status-map">
         <xs:complexType>
             <xs:sequence>
@@ -38,6 +49,7 @@
                 <xs:element ref="metadata"/>
                 <xs:element ref="discover"/>
                 <xs:element ref="novel"/>
+                <xs:element ref="novel-chapters-list"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -70,7 +82,7 @@
 
     <!-- * NOVEL ELEMENT -->
     <xs:element name="novel" type="xs:string"/>
-
+    <xs:element name="novel-chapters-list" type="novel-chapters-listType"/>
 
     <!-- * LANG REFERENCE -->
     <xs:simpleType name="lang">
