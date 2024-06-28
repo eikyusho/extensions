@@ -2,10 +2,7 @@ import 'package:xml/xml.dart';
 import 'package:xml/xpath.dart';
 
 import '../enums/enums.dart';
-import '../parser/element.dart';
-import '../parser/finders/novel_finder.dart';
-import '../parser/finders/novel_list_finder.dart';
-import '../utils/logger.dart';
+import '../parser/element_finder.dart';
 
 /// Extracts data from an XML source.
 class EikyushoParser {
@@ -24,8 +21,6 @@ class EikyushoParser {
   XmlElement get _metadata => _root.getElement('metadata')!;
 
   XmlElement get _discover => _root.getElement('discover')!;
-
-  XmlElement get _novel => _root.getElement('novel')!;
 
   /// Gets the name.
   String get name => _metadata.getElement('name')?.innerText ?? '';
@@ -55,73 +50,34 @@ class EikyushoParser {
   }
 
   /// Gets the novel list.
-  NovelListFinder getNovelList(DiscoverListType type) {
+  ElementFinder getNovelList(DiscoverListType type) {
     final list = _discover.xpath('//novel-list[@id="${type.value}"]').first;
 
-    return _getNovelList(list);
+    return ElementFinder(
+      url: list.getAttribute('url')!,
+      script: _getXPathScript(list),
+    );
   }
 
   /// Gets the novel.
-  NovelFinder getNovelDetails(String url) {
-    final novel = _novel;
+  ElementFinder getNovelDetails(String url) {
+    final novel = _root.getElement('novel')!;
 
-    final titleSelector = _getElement(novel.getElement('title'));
-    final coverSelector = _getElement(novel.getElement('cover'));
-    final authorSelector = _getElement(novel.getElement('author'));
-    final chapterCountSelector = _getElement(novel.getElement('chapter-count'));
-    final viewsSelector = _getElement(novel.getElement('views'));
-    final statusSelector = _getElement(novel.getElement('status'));
-    final descriptionSelector = _getElement(novel.getElement('description'));
-    final genresSelector = _getElement(novel.getElement('genres'));
-
-    return NovelFinder(
+    return ElementFinder(
       url: url,
-      title: titleSelector,
-      cover: coverSelector,
-      author: authorSelector,
-      status: statusSelector,
-      views: viewsSelector,
-      chapterCount: chapterCountSelector,
-      description: descriptionSelector,
-      genres: genresSelector,
+      script: _getScript(novel),
     );
   }
 
-  NovelListFinder _getNovelList(XmlNode novelList) {
-    final url = novelList.getAttribute('url');
+  String _getXPathScript(XmlNode node) {
+    final regex = RegExp(r'\s+');
 
-    final novelItem = novelList.findElements('novel-item').first;
-
-    final selector = novelItem.getAttribute('selector');
-    final titleSelector = _getElement(novelItem.getElement('title'));
-    final coverSelector = _getElement(novelItem.getElement('cover'));
-    final linkSelector = _getElement(novelItem.getElement('link'));
-
-    return NovelListFinder(
-      url: url!,
-      novel: selector!,
-      title: titleSelector,
-      cover: coverSelector,
-      link: linkSelector,
-    );
+    return node.innerText.replaceAll(regex, ' ');
   }
 
-  Element _getElement(XmlNode? node) {
-    if (node == null) throw Exception('Element not found');
+  String _getScript(XmlElement node) {
+    final regex = RegExp(r'\s+');
 
-    final selector = node.innerText;
-    final attribute = node.getAttribute('attribute');
-
-    return Element(selector: selector, attribute: attribute);
-  }
-
-  /// Validates the XML document.
-  void printEverything() {
-    AppLogger.debug('Root element: $_xmlName');
-    // logPrint('Discover element: ${_discover.innerText}');
-
-    final trending = getNovelList(DiscoverListType.trending);
-    final mostPopular = getNovelList(DiscoverListType.mostPopular);
-    final recentlyUpdated = getNovelList(DiscoverListType.recentlyUpdated);
+    return node.innerText.replaceAll(regex, ' ');
   }
 }

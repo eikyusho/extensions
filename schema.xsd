@@ -8,53 +8,16 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:complexType name="novel-item-attrType">
+    <!-- * ELEMENTS  -->
+    <xs:complexType name="novel-listType">
         <xs:simpleContent>
             <xs:extension base="xs:string">
-                <xs:attribute name="attribute" type="xs:string"/>
+                <xs:attribute name="id" type="novel-list-idType" use="required"/>
+                <xs:attribute name="url" type="xs:string" use="required"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
 
-    <xs:simpleType name="novelType">
-        <xs:restriction base="xs:string">
-            <xs:enumeration value="text"/>
-            <xs:enumeration value="selector"/>
-        </xs:restriction>
-    </xs:simpleType>
-
-
-    <!-- * ELEMENTS  -->
-    <xs:element name="novel-list">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element ref="novel-item"/>
-            </xs:sequence>
-            <xs:attribute type="novel-list-idType" name="id" use="required"/>
-            <xs:attribute type="xs:string" name="url" use="required"/>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="novel-item">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="title" type="novel-item-attrType"/>
-                <xs:element name="cover" type="novel-item-attrType"/>
-                <xs:element name="link" type="novel-item-attrType"/>
-            </xs:sequence>
-            <xs:attribute type="xs:string" name="selector" use="required"/>
-        </xs:complexType>
-    </xs:element>
-
-    <xs:element name="novel-meta">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="author" type="xs:string"/>
-                <xs:element name="status" type="xs:string"/>
-                <xs:element name="genre" type="xs:string"/>
-            </xs:sequence>
-        </xs:complexType>
-    </xs:element>
 
     <xs:element name="novel-status-map">
         <xs:complexType>
@@ -96,7 +59,7 @@
     <xs:element name="discover">
         <xs:complexType>
             <xs:sequence>
-                <xs:element ref="novel-list" maxOccurs="unbounded" minOccurs="0"/>
+                <xs:element name="novel-list" type="novel-listType" maxOccurs="3" minOccurs="0"/>
             </xs:sequence>
         </xs:complexType>
         <xs:unique name="UniqueNovelListId">
@@ -106,21 +69,7 @@
     </xs:element>
 
     <!-- * NOVEL ELEMENT -->
-    <xs:element name="novel">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="title" type="novel-item-attrType"/>
-                <xs:element name="cover" type="novel-item-attrType"/>
-                <xs:element name="author" type="novel-item-attrType"/>
-                <xs:element name="chapter-count" type="novel-item-attrType"/>
-                <xs:element name="views" type="novel-item-attrType"/>
-                <xs:element name="status" type="novel-item-attrType"/>
-                <xs:element name="genres" type="novel-item-attrType"/>
-                <xs:element name="description" type="novel-item-attrType"/>
-            </xs:sequence>
-            <xs:attribute type="novelType" name="type" use="required"/>
-        </xs:complexType>
-    </xs:element>
+    <xs:element name="novel" type="xs:string"/>
 
 
     <!-- * LANG REFERENCE -->
@@ -131,4 +80,3 @@
         </xs:restriction>
     </xs:simpleType>
 </xs:schema>
-
