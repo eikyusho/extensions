@@ -50,6 +50,7 @@
                 <xs:element ref="discover"/>
                 <xs:element ref="novel"/>
                 <xs:element ref="novel-chapters-list"/>
+                <xs:element ref="novel-chapter"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -83,6 +84,7 @@
     <!-- * NOVEL ELEMENT -->
     <xs:element name="novel" type="xs:string"/>
     <xs:element name="novel-chapters-list" type="novel-chapters-listType"/>
+    <xs:element name="novel-chapter" type="xs:string"/>
 
     <!-- * LANG REFERENCE -->
     <xs:simpleType name="lang">

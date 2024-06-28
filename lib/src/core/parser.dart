@@ -43,7 +43,8 @@ class EikyushoParser {
     final statusMap = <String, String>{};
 
     for (final status in statusMapElement.findElements('*')) {
-      statusMap[status.name.toString().toLowerCase()] = status.innerText;
+      statusMap[status.name.toString().toLowerCase()] =
+          status.innerText.toLowerCase();
     }
 
     return statusMap;
@@ -63,7 +64,6 @@ class EikyushoParser {
   ElementFinder getNovelDetails(String url) {
     final novel = _root.getElement('novel')!;
 
-
     return ElementFinder(
       url: url,
       script: _getScript(novel),
@@ -78,6 +78,16 @@ class EikyushoParser {
       url: '$url/${novel.getAttribute('url')}',
       script: _getScript(novel),
       nextButtonSelector: novel.getAttribute('next-button'),
+    );
+  }
+
+  /// Gets the novel chapter content.
+  ElementFinder getChapterContent(String url) {
+    final novel = _root.getElement('novel-chapter')!;
+
+    return ElementFinder(
+      url: url,
+      script: _getScript(novel),
     );
   }
 
