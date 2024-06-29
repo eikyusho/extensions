@@ -3,7 +3,7 @@
     <metadata>
         <name>Light Novel World</name>
         <base-url>https://www.lightnovelworld.co</base-url>
-        <version>1.0.5</version>
+        <version>1.0.6</version>
         <language>en</language>
         <novel-status-map>
             <ongoing>onGoing</ongoing>
@@ -44,8 +44,11 @@
         </novel-list>
     </discover>
     <novel>
-        function getDetails() {
+        (function () {
         const novelHeader = document.querySelector('#novel .header-body');
+
+        const genres = Array.from(document.querySelectorAll('.novel-info > div.categories > ul > li')).map(genre =>
+        genre.innerText);
 
         return {
         title: novelHeader.querySelector('.novel-info > div.main-head > h1').innerText,
@@ -54,21 +57,25 @@
         chapters: novelHeader.querySelector('.novel-info div.header-stats > span:nth-child(1) strong').innerText,
         views: novelHeader.querySelector('.novel-info div.header-stats > span:nth-child(2) strong').innerText,
         status: novelHeader.querySelector('.novel-info div.header-stats > span:nth-child(4) strong').innerText,
-        genres: Array.from(document.querySelectorAll('.novel-info > div.categories > ul > li')).map(genre =>
-        genre.innerText),
+        genres: genres,
         description: document.querySelector('#info > div.summary > div p').innerText,
         };
-        }
-
-        getDetails();
+        })()
     </novel>
     <novel-chapters-list url="/chapters" next-button="#chpagedlist > div > div > div > ul > li.PagedList-skipToNext a">
         Array.from(document.querySelectorAll('#chpagedlist > ul > li'), chapter => {
+
+        const dateElemeent = chapter.querySelector('.chapter-update');
+
+        const dateAttr = dateElemeent ? dateElemeent.getAttribute('datetime') : '';
+
+        const date = dateAttr ? dateAttr.split(' ')[0] : '';
+
         return {
-        number: chapter.querySelector('.chapter-no').innerText,
+        number: chapter.querySelector('.chapter-no').innerText.trim() ?? '0',
         title: chapter.querySelector('.chapter-title').innerText,
         link: chapter.querySelector('a').href,
-        date: chapter.querySelector('.chapter-update').getAttribute('datetime').split(' ')[0]
+        date: date
         };
         });
     </novel-chapters-list>
