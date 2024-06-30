@@ -50,6 +50,16 @@ class EikyushoParser {
     return statusMap;
   }
 
+  /// Gets a list of novels using the [query].
+  ElementFinder searchNovels(String query) {
+    final search = _root.getElement('search')!;
+
+    return ElementFinder(
+      url: search.getAttribute('url')!,
+      script: _getScript(search).replaceFirst(r'$searchTerm$', query),
+    );
+  }
+
   /// Gets the novel list.
   ElementFinder getNovelList(DiscoverListType type) {
     final list = _discover.xpath('//novel-list[@id="${type.value}"]').first;

@@ -20,6 +20,15 @@
 
 
     <!-- * ELEMENTS  -->
+    <xs:complexType name="searchType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="url" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+
     <xs:complexType name="novel-chapters-listType">
         <xs:simpleContent>
             <xs:extension base="xs:string">
@@ -48,6 +57,7 @@
             <xs:sequence>
                 <xs:element ref="metadata"/>
                 <xs:element ref="discover"/>
+                <xs:element ref="search"/>
                 <xs:element ref="novel"/>
                 <xs:element ref="novel-chapters-list"/>
                 <xs:element ref="novel-chapter"/>
@@ -82,6 +92,7 @@
     </xs:element>
 
     <!-- * NOVEL ELEMENT -->
+    <xs:element name="search" type="searchType"/>
     <xs:element name="novel" type="xs:string"/>
     <xs:element name="novel-chapters-list" type="novel-chapters-listType"/>
     <xs:element name="novel-chapter" type="xs:string"/>
