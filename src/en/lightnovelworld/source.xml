@@ -3,7 +3,7 @@
     <metadata>
         <name>Light Novel World</name>
         <base-url>https://www.lightnovelworld.co</base-url>
-        <version>1.0.6</version>
+        <version>1.0.7</version>
         <language>en</language>
         <novel-status-map>
             <ongoing>onGoing</ongoing>
@@ -33,12 +33,16 @@
             });
         </novel-list>
         <novel-list id="recently-updated" url="/latest-updates-04061612">
-            Array.from(document.querySelectorAll('#latest-updates > div > ul > .novel-item'), item =>
-            {
+            Array.from(document.querySelectorAll('#latest-updates > div > ul > .novel-item'), item => {
+
+            const linkElement = item.querySelector('a').href;
+
+            const link = linkElement.replace(/-\d+(?=\/|$)/, '').replace(/\/chapter-\d+$/, '');
+
             return {
             title: item.querySelector('.novel-title').innerText,
             cover: item.querySelector('img').getAttribute('data-src'),
-            link: item.querySelector('a').href
+            link: link,
             };
             });
         </novel-list>
