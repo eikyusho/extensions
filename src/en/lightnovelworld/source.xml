@@ -3,7 +3,7 @@
     <metadata>
         <name>Light Novel World</name>
         <base-url>https://www.lightnovelworld.co</base-url>
-        <version>1.0.7</version>
+        <version>1.1.0</version>
         <language>en</language>
         <novel-status-map>
             <ongoing>onGoing</ongoing>
@@ -47,6 +47,44 @@
             });
         </novel-list>
     </discover>
+    <search url="/search">
+        return await (async function () {
+        document.querySelector('#inputContent').value = '$searchQuery$';
+        document.querySelector('#novelSearchForm').requestSubmit();
+
+        function waitForElement(selector) {
+        return new Promise((resolve) => {
+        const targetNode = document.querySelector('#novelListBase');
+
+        const observerOptions = {
+        childList: true,
+        subtree: true
+        };
+
+        const observer = new MutationObserver((mutations, obs) => {
+        const elements = document.querySelectorAll(selector);
+
+        obs.disconnect();
+        resolve(elements);
+
+        });
+
+        observer.observe(targetNode, observerOptions);
+        });
+        }
+
+        const searchResults = await waitForElement('#novelListBase > ul .novel-item');
+
+        return Array.from(searchResults).map((item) => {
+        return {
+        title: item.querySelector('.novel-title').innerText,
+        cover: item.querySelector('.novel-cover > img').src,
+        link: item.querySelector('a').href,
+        additionalInfo: item.querySelector('.item-body > div:nth-child(2) > strong').innerText,
+        };
+        });
+        })();
+    </search>
     <novel>
         (function () {
         const novelHeader = document.querySelector('#novel .header-body');

@@ -56,7 +56,7 @@ class EikyushoParser {
 
     return ElementFinder(
       url: search.getAttribute('url')!,
-      script: _getScript(search).replaceFirst(r'$searchTerm$', query),
+      script: _getScript(search).replaceFirst(r'$searchQuery$', query),
     );
   }
 
