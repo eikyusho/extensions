@@ -3,31 +3,44 @@
     <metadata>
         <name>ReadNovelFull</name>
         <base-url>https://readnovelfull.com</base-url>
-        <version>1.0.0</version>
+        <version>1.1.0</version>
         <language>en</language>
+        <novel-status-map>
+            <ongoing>onGoing</ongoing>
+            <completed>Completed</completed>
+        </novel-status-map>
     </metadata>
 
     <discover>
         <novel-list id="trending" url="/">
-            <novel-item selector="#index-novel-hot > div.index-novel > div.item">
-                <title>.title h3</title>
-                <cover attribute="src">img</cover>
-                <link attribute="href">a</link>
-            </novel-item>
+            Array.from(document.querySelectorAll('#index-novel-hot > div.index-novel > div.item'), item =>
+            {
+            return {
+            title: item.querySelector('.title h3').textContent.trim(),
+            cover: item.querySelector('img').src,
+            link: item.querySelector('a').href
+            };
+            });
         </novel-list>
         <novel-list id="most-popular" url="/novel-list/most-popular-novel">
-            <novel-item selector="#list-page > .col-novel-main.archive .row">
-                <title>.novel-title</title>
-                <cover attribute="src">.cover</cover>
-                <link attribute="href">a</link>
-            </novel-item>
+            Array.from(document.querySelectorAll('#list-page > .col-novel-main.archive .row'), item =>
+            {
+            return {
+            title: item.querySelector('.novel-title').textContent.trim(),
+            cover: item.querySelector('.cover').src,
+            link: item.querySelector('a').href
+            };
+            });
         </novel-list>
         <novel-list id="recently-updated" url="/novel-list/latest-release-novel">
-            <novel-item selector="#list-page > .col-novel-main.archive .row">
-                <title>.novel-title</title>
-                <cover attribute="src">.cover</cover>
-                <link attribute="href">a</link>
-            </novel-item>
+            Array.from(document.querySelectorAll('#list-page > .col-novel-main.archive .row'), item => {
+
+            return {
+            title: item.querySelector('.novel-title').textContent.trim(),
+            cover: item.querySelector('.cover').src,
+            link: item.querySelector('a').href,
+            };
+            });
         </novel-list>
     </discover>
 </eks-source>
