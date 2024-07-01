@@ -3,7 +3,7 @@
     <metadata>
         <name>Light Novel World</name>
         <base-url>https://www.lightnovelworld.co</base-url>
-        <version>1.1.1</version>
+        <version>1.1.2</version>
         <language>en</language>
         <novel-status-map>
             <ongoing>onGoing</ongoing>
@@ -100,7 +100,7 @@
         views: novelHeader.querySelector('.novel-info div.header-stats > span:nth-child(2) strong').textContent.trim(),
         status: novelHeader.querySelector('.novel-info div.header-stats > span:nth-child(4) strong').textContent.trim(),
         genres: genres,
-        description: document.querySelector('#info > div.summary > div p').textContent.trim(),
+        description: document.querySelector('#info > div.summary > div p').textContent,
         };
         })()
     </novel>
@@ -122,6 +122,6 @@
         });
     </novel-chapters-list>
     <novel-chapter>
-        document.querySelector('#chapter-container').textContent.trim();
+        document.querySelector('#chapter-container').textContent;
     </novel-chapter>
 </eks-source>
