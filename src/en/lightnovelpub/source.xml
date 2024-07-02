@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<eks-source xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../schema.xsd">
+    <metadata>
+        <name>Light Novel Pub</name>
+        <base-url>https://lightnovelpub.vip</base-url>
+        <version>1.0.0</version>
+        <language>en</language>
+        <novel-status-map>
+            <ongoing>onGoing</ongoing>
+            <completed>Completed</completed>
+        </novel-status-map>
+    </metadata>
+
+    <discover>
+        <novel-list id="trending" url="/home">
+            Array.from(document.querySelectorAll("#popular-novel-section > div > div:nth-child(8) > ul > li"), item =>
+            {
+            return {
+            title: item.querySelector('.novel-title').textContent.trim(),
+            cover: item.querySelector('.novel-cover img').getAttribute('data-src'),
+            link: item.querySelector('a').href
+            };
+            });
+        </novel-list>
+        <novel-list id="most-popular" url="/ranking-04061612">
+            Array.from(document.querySelectorAll('#ranking > div.container > div > ul > li'), item =>
+            {
+            return {
+            title: item.querySelector('.title').textContent.trim(),
+            cover: item.querySelector('img').getAttribute('data-src'),
+            link: item.querySelector('a').href
+            };
+            }).slice(10, 100);
+        </novel-list>
+        <novel-list id="recently-updated" url="/latest-updates-04061612">
+            Array.from(document.querySelectorAll('#latest-updates > div > ul > .novel-item'), item => {
+
+            const linkElement = item.querySelector('a').href;
+
+            const link = linkElement.replace(/-\d+(?=\/|$)/, '').replace(/\/chapter-\d+$/, '');
+
+            return {
+            title: item.querySelector('.novel-title').textContent.trim(),
+            cover: item.querySelector('img').getAttribute('data-src'),
+            link: link,
+            };
+            }).slice(0, 30);
+        </novel-list>
+    </discover>
+    <search url="/search">
+        return await (async function () {
+        document.querySelector('#inputContent').value = '$searchQuery$';
+        document.querySelector('#novelSearchForm').requestSubmit();
+
+        function waitForElement(selector) {
+        return new Promise((resolve) => {
+        const targetNode = document.querySelector('#novelListBase');
+
+        const observerOptions = {
+        childList: true,
+        subtree: true
+        };
+
+        const observer = new MutationObserver((mutations, obs) => {
+        const elements = document.querySelectorAll(selector);
+
+        obs.disconnect();
+        resolve(elements);
+
+        });
+
+        observer.observe(targetNode, observerOptions);
+        });
+        }
+
+        const searchResults = await waitForElement('#novelListBase > ul .novel-item');
+
+        return Array.from(searchResults).map((item) => {
+        return {
+        title: item.querySelector('.novel-title').textContent.trim(),
+        cover: item.querySelector('.novel-cover > img').src,
+        link: item.querySelector('a').href,
+        additionalInfo: item.querySelector('.item-body > div:nth-child(2) > strong').textContent.trim(),
+        };
+        });
+        })();
+    </search>
+    <novel>
+        (function () {
+        const novelHeader = document.querySelector('#novel .header-body');
+
+        const genres = Array.from(document.querySelectorAll('.novel-info > div.categories > ul > li')).map(genre =>
+        genre.innerText);
+
+        return {
+        title: novelHeader.querySelector('.novel-info > div.main-head > h1').textContent.trim(),
+        cover: novelHeader.querySelector('figure > img').getAttribute('data-src'),
+        author: novelHeader.querySelector('.novel-info .author > a > span').textContent.trim(),
+        chapters: novelHeader.querySelector('.novel-info div.header-stats > span:nth-child(1) strong').textContent.trim(),
+        views: novelHeader.querySelector('.novel-info div.header-stats > span:nth-child(2) strong').textContent.trim(),
+        status: novelHeader.querySelector('.novel-info div.header-stats > span:nth-child(4) strong').textContent.trim(),
+        genres: genres,
+        description: document.querySelector('#info > div.summary > div p').textContent,
+        };
+        })()
+    </novel>
+    <novel-chapters-list url="/chapters" next-button="#chpagedlist > div > div > div > ul > li.PagedList-skipToNext a">
+        Array.from(document.querySelectorAll('#chpagedlist > ul > li'), chapter => {
+
+        const dateElemeent = chapter.querySelector('.chapter-update');
+
+        const dateAttr = dateElemeent ? dateElemeent.getAttribute('datetime') : '';
+
+        const date = dateAttr ? dateAttr.split(' ')[0] : '';
+
+        return {
+        number: chapter.querySelector('.chapter-no').textContent.trim() ?? '0',
+        title: chapter.querySelector('.chapter-title').textContent.trim(),
+        link: chapter.querySelector('a').href,
+        date: date
+        };
+        });
+    </novel-chapters-list>
+    <novel-chapter>
+        document.querySelector('#chapter-container').innerText;
+    </novel-chapter>
+</eks-source>
